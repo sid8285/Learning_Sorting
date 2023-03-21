@@ -8,6 +8,8 @@ int extraMemoryAllocated;
 
 void merge(int pData[], int l, int m, int r)
 {
+	//in this "l" is the first number in the array (index 0), "m" is the middle digit, and "r" is the last index in the array
+	//declaring new variables n1 and n2 to split up the array and sort
     int i, j, k;
     int n1 = m - l + 1;
     int n2 = r - m;
@@ -15,6 +17,7 @@ void merge(int pData[], int l, int m, int r)
     int* L = (int*)malloc(n1 * sizeof(int));
     int* R = (int*)malloc(n2 * sizeof(int));
 
+	//filling our newly created arrays with the info from the previous array
     for (i = 0; i < n1; i++)
         L[i] = pData[l + i];
     for (j = 0; j < n2; j++)
@@ -23,6 +26,7 @@ void merge(int pData[], int l, int m, int r)
     i = 0;
     j = 0;
     k = l;
+	//comparing the two given elements and placing one in front of the other
     while (i < n1 && j < n2) {
         if (L[i] <= R[j]) {
             pData[k] = L[i];
@@ -57,8 +61,11 @@ void merge(int pData[], int l, int m, int r)
 // extraMemoryAllocated counts bytes of extra memory allocated
 void mergeSort(int pData[], int l, int r)
 {
+	//calculating the middle value in which the array will be split and compared
 	if (l < r) {
         int m = l + (r - l) / 2;
+		
+	//using recursive calls to sort the array by breaking it down to smaller pieces	
         mergeSort(pData, l, m);
         mergeSort(pData, m + 1, r);
         merge(pData, l, m, r);
@@ -73,10 +80,12 @@ void insertionSort(int* pData, int n)
     for (i = 1; i < n; i++) {
         key = pData[i];
         j = i - 1;
+	    //finds the correct spot in the array to insert the sorted integer into
         while (j >= 0 && pData[j] > key) {
             pData[j + 1] = pData[j];
             j = j - 1;
         }
+	//pushes the sorted digit into its correct spot in the array    
         pData[j + 1] = key;
     }
 
@@ -133,6 +142,7 @@ int parseData(char *inputFileName, int **ppData)
 		fscanf(inFile,"%d\n",&dataSz);
 		*ppData = (int *)malloc(sizeof(int) * dataSz);
 		// Implement parse data block
+		//reading the newly sorted file and displaying it when the program runs
         for (int i = 0; i < dataSz; i++) {
             fscanf(inFile, "%d", &(*ppData)[i]);
         }
